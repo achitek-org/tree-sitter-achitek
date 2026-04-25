@@ -1,0 +1,27 @@
+[package]
+name = "tree-sitter-achitekfile"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Tree-sitter grammar for Achitekfile"
+repository = "https://github.com/sjoli/tree-sitter-achitek"
+build = "bindings/rust/build.rs"
+include = [
+  "bindings/rust/*",
+  "grammar.js",
+  "queries/*",
+  "src/**",
+  "tree-sitter.json",
+]
+
+[lib]
+path = "bindings/rust/lib.rs"
+
+[dependencies]
+tree-sitter-language = "0.1"
+
+[build-dependencies]
+cc = "1.1"
+
+[dev-dependencies]
+tree-sitter = "0.25.10"

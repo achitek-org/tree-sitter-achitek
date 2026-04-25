@@ -1,0 +1,9 @@
+node_modules/
+build/
+dist/
+.direnv/
+result
+target/
+Cargo.lock
+*.wasm
+*.dylib

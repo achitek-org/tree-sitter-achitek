@@ -1,0 +1,40 @@
+{
+  "name": "tree-sitter-achitek",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for Achitekfile",
+  "license": "MIT",
+  "repository": "https://github.com/sjoli/tree-sitter-achitek",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "bindings/node/*",
+    "bindings/rust/*",
+    "queries/*",
+    "src/**"
+  ],
+  "keywords": [
+    "parser",
+    "tree-sitter",
+    "achitek",
+    "dsl"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4"
+  },
+  "scripts": {
+    "lint": "oxlint grammar.js bindings/**/*.js",
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter generate && tree-sitter test",
+    "parse": "tree-sitter parse examples/Achitekfile",
+    "build": "tree-sitter generate && tree-sitter build",
+    "install": "node-gyp-build"
+  },
+  "devDependencies": {
+    "oxlint": "^1.14.0",
+    "tree-sitter-cli": "^0.26.7"
+  }
+}

@@ -1,0 +1,19 @@
+use tree_sitter_language::LanguageFn;
+
+extern "C" {
+    fn tree_sitter_achitekfile() -> *const ();
+}
+
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_achitekfile) };
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn grammar_loads() {
+        let mut parser = tree_sitter::Parser::new();
+        let language = super::LANGUAGE.into();
+        parser
+            .set_language(&language)
+            .expect("Error loading Achitekfile grammar");
+    }
+}

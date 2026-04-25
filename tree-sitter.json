@@ -1,0 +1,24 @@
+{
+  "grammars": [
+    {
+      "name": "achitekfile",
+      "camelcase": "Achitekfile",
+      "scope": "source.achitekfile",
+      "file-types": [
+        "Achitekfile"
+      ],
+      "injection-regex": "^achitekfile$",
+      "class-name": "TreeSitterAchitekfile"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for Achitekfile",
+    "authors": [
+      {
+        "name": "Samuel Joli"
+      }
+    ]
+  }
+}

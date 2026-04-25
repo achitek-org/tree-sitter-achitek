@@ -1,0 +1,190 @@
+==================
+Minimal blueprint
+==================
+
+blueprint {
+  version = "1.0.0"
+  name = "minimal"
+}
+
+prompt "project_name" {
+  type = string
+  help = "Project name"
+}
+
+---
+
+(file
+  (blueprint_block
+    (blueprint_attribute
+      key: (blueprint_attribute_key)
+      value: (string_literal))
+    (blueprint_attribute
+      key: (blueprint_attribute_key)
+      value: (string_literal)))
+  (prompt_block
+    name: (string_literal)
+    (question_attribute
+      (type_attribute
+        value: (question_type)))
+    (question_attribute
+      (help_attribute
+        value: (string_literal)))))
+
+==================
+Dependencies and validation
+==================
+
+blueprint {
+  version = "1.0.0"
+  name = "rust-binary"
+  description = "Rust binary project template"
+}
+
+prompt "project_name" {
+  type = string
+  help = "Name of your Rust project"
+  default = "my-project"
+
+  validate {
+    regex = "^[a-z][a-z0-9_-]*$"
+    min_length = 3
+    max_length = 50
+  }
+}
+
+prompt "features" {
+  type = multiselect
+  help = "Select features to include"
+  choices = ["logging", "async", "cli", "config",]
+
+  validate {
+    min_selections = 1
+    max_selections = 3
+  }
+}
+
+prompt "cli_framework" {
+  type = select
+  help = "Choose CLI framework"
+  choices = ["clap", "structopt", "argh"]
+  default = "clap"
+  depends_on = all(
+    features.contains("cli"),
+    any(
+      project_name != "example",
+      project_name == "demo",
+    ),
+  )
+}
+
+---
+
+(file
+  (blueprint_block
+    (blueprint_attribute
+      key: (blueprint_attribute_key)
+      value: (string_literal))
+    (blueprint_attribute
+      key: (blueprint_attribute_key)
+      value: (string_literal))
+    (blueprint_attribute
+      key: (blueprint_attribute_key)
+      value: (string_literal)))
+  (prompt_block
+    name: (string_literal)
+    (question_attribute
+      (type_attribute
+        value: (question_type)))
+    (question_attribute
+      (help_attribute
+        value: (string_literal)))
+    (question_attribute
+      (default_attribute
+        value: (value
+          (string_literal))))
+    (validate_block
+      (validate_attribute
+        (regex_attribute
+          value: (string_literal)))
+      (validate_attribute
+        (min_length_attribute
+          value: (integer)))
+      (validate_attribute
+        (max_length_attribute
+          value: (integer)))))
+  (prompt_block
+    name: (string_literal)
+    (question_attribute
+      (type_attribute
+        value: (question_type)))
+    (question_attribute
+      (help_attribute
+        value: (string_literal)))
+    (question_attribute
+      (choices_attribute
+        value: (array
+          (value_list
+            (value
+              (string_literal))
+            (value
+              (string_literal))
+            (value
+              (string_literal))
+            (value
+              (string_literal))))))
+    (validate_block
+      (validate_attribute
+        (min_selections_attribute
+          value: (integer)))
+      (validate_attribute
+        (max_selections_attribute
+          value: (integer)))))
+  (prompt_block
+    name: (string_literal)
+    (question_attribute
+      (type_attribute
+        value: (question_type)))
+    (question_attribute
+      (help_attribute
+        value: (string_literal)))
+    (question_attribute
+      (choices_attribute
+        value: (array
+          (value_list
+            (value
+              (string_literal))
+            (value
+              (string_literal))
+            (value
+              (string_literal))))))
+    (question_attribute
+      (default_attribute
+        value: (value
+          (string_literal))))
+    (question_attribute
+      (depends_on_attribute
+        value: (dependency_expr
+          (combinator_dependency
+            name: (combinator_name)
+            arguments: (dependency_list
+              (dependency_expr
+                (method_call_dependency
+                  receiver: (identifier)
+                  method: (method_name)
+                  argument: (literal_value
+                    (string_literal))))
+              (dependency_expr
+                (combinator_dependency
+                  name: (combinator_name)
+                  arguments: (dependency_list
+                    (dependency_expr
+                      (comparison_dependency
+                        left: (identifier)
+                        right: (literal_value
+                          (string_literal))))
+                    (dependency_expr
+                      (comparison_dependency
+                        left: (identifier)
+                        right: (literal_value
+                          (string_literal))))))))))))))
